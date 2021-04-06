@@ -20,8 +20,8 @@ mv /tmp/src/scripts/* $APP_ROOT/bin/
 
 curl -s -o /tmp/src/oc.tar.gz https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-linux.tar.gz && \
   tar -zxf /tmp/src/oc.tar.gz && \
-  mv /tmp/src/oc/oc $APP_ROOT/bin && \
-  mv /tmp/src/oc/kubectl $APP_ROOT/bin
+  mv /tmp/src/oc $APP_ROOT/bin && \
+  mv /tmp/src/kubectl $APP_ROOT/bin
 
 rm -rf /tmp/src
 
