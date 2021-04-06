@@ -1,0 +1,7 @@
+labels:
+  - io.k8s.display-name: airflow
+  - io.k8s.description: Apache Airflow on OpenShift
+  - io.openshift.s2i.scripts-url: 'image:///opt/app-root/builder'
+  - io.s2i.scripts-url: 'image:///opt/app-root/builder'
+  - io.openshift.expose-services: '8080:http'
+  - io.openshift.tags: 'builder,python,airflow'

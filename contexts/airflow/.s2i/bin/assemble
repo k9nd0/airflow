@@ -1,0 +1,30 @@
+#!/bin/bash
+
+set -eo pipefail
+
+set -x
+
+pip install --no-cache-dir -r /tmp/src/requirements.txt
+
+mkdir -p $AIRFLOW_HOME/logs && mkdir -p $AIRFLOW_HOME/dags
+
+mkdir -p /tmp/.s2i
+
+mv /tmp/src/builder/image_metadata.yml /tmp/.s2i/image_metadata.yml
+
+chmod -R 755 /tmp/src/builder
+mv /tmp/src/builder $APP_ROOT/builder
+
+chmod -R 755 /tmp/src/scripts
+mv /tmp/src/scripts/* $APP_ROOT/bin/
+
+curl -s -o /tmp/src/oc.tar.gz https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-linux.tar.gz && \
+  tar -zxf /tmp/src/oc.tar.gz && \
+  mv /tmp/src/oc/oc $APP_ROOT/bin && \
+  mv /tmp/src/oc/kubectl $APP_ROOT/bin
+
+rm -rf /tmp/src
+
+echo "source /opt/app-root/etc/generate_container_user" >> $APP_ROOT/etc/scl_enable
+
+fix-permissions $APP_ROOT
